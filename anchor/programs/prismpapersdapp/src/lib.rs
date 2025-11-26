@@ -1,16 +1,12 @@
 use anchor_lang::prelude::*;
 
+mod constants;
+mod errors;
+mod instructions;
+mod states;
 declare_id!("JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H");
 
 #[program]
 pub mod prismpapersdapp {
     use super::*;
-
-    pub fn greet(_ctx: Context<Initialize>) -> Result<()> {
-        msg!("GM!");
-        Ok(())
-    }
 }
-
-#[derive(Accounts)]
-pub struct Initialize {}
