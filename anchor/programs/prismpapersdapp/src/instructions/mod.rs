@@ -1,4 +1,3 @@
-//init_user.rs init_research.rs update_research.rs purchase_access.rs peer_review.rs verify_review.rs admin_withdraw.rs user_withdraw.rs
 pub mod admin_withdraw;
 pub mod init_research;
 pub mod init_user;
