@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/prismpapersdapp.json`.
  */
 export type Prismpapersdapp = {
-  "address": "JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H",
+  "address": "2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv",
   "metadata": {
     "name": "prismpapersdapp",
     "version": "0.1.0",

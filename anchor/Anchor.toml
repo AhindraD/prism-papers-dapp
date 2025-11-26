@@ -17,3 +17,4 @@ wallet = "~/menageri3.json"
 
 [scripts]
 test = "vitest"
+# test = "pnpm run vitest"

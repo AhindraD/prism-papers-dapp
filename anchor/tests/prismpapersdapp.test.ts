@@ -29,7 +29,7 @@ import { loadKeypairSignerFromFile } from 'gill/node'
 // CONFIGURATION
 // -----------------------------------------------------------------------------
 
-const PROGRAM_ID = address("JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H");
+const PROGRAM_ID = address("2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv");
 const { rpc, sendAndConfirmTransaction } = createSolanaClient({ urlOrMoniker: process.env.ANCHOR_PROVIDER_URL! })
 
 // SEEDS (Must match Rust constants exactly)

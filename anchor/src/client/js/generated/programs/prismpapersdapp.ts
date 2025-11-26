@@ -25,7 +25,7 @@ import {
 } from '../instructions';
 
 export const PRISMPAPERSDAPP_PROGRAM_ADDRESS =
-  'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H' as Address<'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H'>;
+  '2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv' as Address<'2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv'>;
 
 export enum PrismpapersdappAccount {
   AccessReceipt,
@@ -196,29 +196,29 @@ export function identifyPrismpapersdappInstruction(
 }
 
 export type ParsedPrismpapersdappInstruction<
-  TProgram extends string = 'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H',
+  TProgram extends string = '2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv',
 > =
   | ({
-      instructionType: PrismpapersdappInstruction.AdminWithdraw;
-    } & ParsedAdminWithdrawInstruction<TProgram>)
+    instructionType: PrismpapersdappInstruction.AdminWithdraw;
+  } & ParsedAdminWithdrawInstruction<TProgram>)
   | ({
-      instructionType: PrismpapersdappInstruction.InitResearch;
-    } & ParsedInitResearchInstruction<TProgram>)
+    instructionType: PrismpapersdappInstruction.InitResearch;
+  } & ParsedInitResearchInstruction<TProgram>)
   | ({
-      instructionType: PrismpapersdappInstruction.InitUser;
-    } & ParsedInitUserInstruction<TProgram>)
+    instructionType: PrismpapersdappInstruction.InitUser;
+  } & ParsedInitUserInstruction<TProgram>)
   | ({
-      instructionType: PrismpapersdappInstruction.PurchaseAccess;
-    } & ParsedPurchaseAccessInstruction<TProgram>)
+    instructionType: PrismpapersdappInstruction.PurchaseAccess;
+  } & ParsedPurchaseAccessInstruction<TProgram>)
   | ({
-      instructionType: PrismpapersdappInstruction.ReviewPaper;
-    } & ParsedReviewPaperInstruction<TProgram>)
+    instructionType: PrismpapersdappInstruction.ReviewPaper;
+  } & ParsedReviewPaperInstruction<TProgram>)
   | ({
-      instructionType: PrismpapersdappInstruction.UpdateResearch;
-    } & ParsedUpdateResearchInstruction<TProgram>)
+    instructionType: PrismpapersdappInstruction.UpdateResearch;
+  } & ParsedUpdateResearchInstruction<TProgram>)
   | ({
-      instructionType: PrismpapersdappInstruction.UserWithdraw;
-    } & ParsedUserWithdrawInstruction<TProgram>)
+    instructionType: PrismpapersdappInstruction.UserWithdraw;
+  } & ParsedUserWithdrawInstruction<TProgram>)
   | ({
-      instructionType: PrismpapersdappInstruction.VerifyReview;
-    } & ParsedVerifyReviewInstruction<TProgram>);
+    instructionType: PrismpapersdappInstruction.VerifyReview;
+  } & ParsedVerifyReviewInstruction<TProgram>);
