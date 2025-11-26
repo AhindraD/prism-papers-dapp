@@ -59,4 +59,16 @@ pub mod prismpapersdapp {
         ctx.accounts
             .review_paper(review_url, proposed_reward, &bumps)
     }
+
+    pub fn verify_review(ctx: Context<VerifyReview>, accept_proposed_review: bool) -> Result<()> {
+        ctx.accounts.verify_review(accept_proposed_review)
+    }
+
+    pub fn user_withdraw(ctx: Context<UserWithdraw>, amount: u64) -> Result<()> {
+        ctx.accounts.user_withdraw(amount)
+    }
+
+    pub fn admin_withdraw(ctx: Context<AdminWithdraw>, amount: u64) -> Result<()> {
+        ctx.accounts.admin_withdraw(amount)
+    }
 }

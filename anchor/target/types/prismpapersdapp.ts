@@ -14,6 +14,60 @@ export type Prismpapersdapp = {
   },
   "instructions": [
     {
+      "name": "adminWithdraw",
+      "discriminator": [
+        160,
+        166,
+        147,
+        222,
+        46,
+        220,
+        75,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "adminVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "initResearch",
       "discriminator": [
         244,
@@ -378,6 +432,466 @@ export type Prismpapersdapp = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "reviewPaper",
+      "discriminator": [
+        143,
+        66,
+        152,
+        52,
+        94,
+        165,
+        129,
+        123
+      ],
+      "accounts": [
+        {
+          "name": "reviewer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "researchPaper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "research_paper.author",
+                "account": "researchPaper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "accessReceipt",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer"
+              },
+              {
+                "kind": "account",
+                "path": "researchPaper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reviewerUserAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer_user_account.owner",
+                "account": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "peerReview",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer"
+              },
+              {
+                "kind": "account",
+                "path": "researchPaper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "reviewUrl",
+          "type": "string"
+        },
+        {
+          "name": "proposedReward",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updateResearch",
+      "discriminator": [
+        67,
+        217,
+        131,
+        205,
+        160,
+        157,
+        81,
+        205
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "researchPaper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "research_paper.author",
+                "account": "researchPaper"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "encryptedUrl",
+          "type": "string"
+        },
+        {
+          "name": "encryptionKey",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "userWithdraw",
+      "discriminator": [
+        53,
+        254,
+        26,
+        242,
+        119,
+        237,
+        73,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "userVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "verifyReview",
+      "discriminator": [
+        97,
+        251,
+        145,
+        202,
+        132,
+        80,
+        96,
+        15
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "peerReview",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "peer_review.reviewer",
+                "account": "peerReview"
+              },
+              {
+                "kind": "account",
+                "path": "peer_review.reviewed_paper",
+                "account": "peerReview"
+              }
+            ]
+          }
+        },
+        {
+          "name": "researchPaper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "peer_review.reviewed_paper",
+                "account": "peerReview"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reviewerUserAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer_user_account.owner",
+                "account": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authorUserAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author_user_account.owner",
+                "account": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reviewerVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer_user_account.owner",
+                "account": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authorVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author"
+              }
+            ]
+          }
+        },
+        {
+          "name": "adminVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "acceptProposedReview",
+          "type": "bool"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -392,6 +906,19 @@ export type Prismpapersdapp = {
         203,
         172,
         176
+      ]
+    },
+    {
+      "name": "peerReview",
+      "discriminator": [
+        13,
+        168,
+        128,
+        102,
+        214,
+        123,
+        208,
+        229
       ]
     },
     {
@@ -439,12 +966,12 @@ export type Prismpapersdapp = {
     },
     {
       "code": 6003,
-      "name": "paperUrlEmpty",
+      "name": "paperUrlEmptyOrTooLong",
       "msg": "Research Paper URL/CID cannot be empty"
     },
     {
       "code": 6004,
-      "name": "encryptionKeyEmpty",
+      "name": "encryptionKeyEmptyOrTooLong",
       "msg": "Protocol Encryption Key cannot be empty"
     },
     {
@@ -514,7 +1041,7 @@ export type Prismpapersdapp = {
     },
     {
       "code": 6018,
-      "name": "notPurchased",
+      "name": "paperNotPurchased",
       "msg": "You must purchase the paper before reviewing it"
     }
   ],
@@ -531,6 +1058,46 @@ export type Prismpapersdapp = {
           {
             "name": "purchasedPaper",
             "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "peerReview",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "reviewer",
+            "type": "pubkey"
+          },
+          {
+            "name": "reviewedPaper",
+            "type": "pubkey"
+          },
+          {
+            "name": "reviewUrl",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "reviewStatus"
+              }
+            }
+          },
+          {
+            "name": "proposedReward",
+            "type": "u64"
           },
           {
             "name": "timestamp",
@@ -587,6 +1154,23 @@ export type Prismpapersdapp = {
           {
             "name": "bump",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reviewStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "pending"
+          },
+          {
+            "name": "accepted"
+          },
+          {
+            "name": "rejected"
           }
         ]
       }

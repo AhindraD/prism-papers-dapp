@@ -8,6 +8,60 @@
   },
   "instructions": [
     {
+      "name": "admin_withdraw",
+      "discriminator": [
+        160,
+        166,
+        147,
+        222,
+        46,
+        220,
+        75,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "admin_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "init_research",
       "discriminator": [
         244,
@@ -372,6 +426,466 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "review_paper",
+      "discriminator": [
+        143,
+        66,
+        152,
+        52,
+        94,
+        165,
+        129,
+        123
+      ],
+      "accounts": [
+        {
+          "name": "reviewer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "research_paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "research_paper.author",
+                "account": "ResearchPaper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "access_receipt",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer"
+              },
+              {
+                "kind": "account",
+                "path": "research_paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reviewer_user_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer_user_account.owner",
+                "account": "User"
+              }
+            ]
+          }
+        },
+        {
+          "name": "peer_review",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer"
+              },
+              {
+                "kind": "account",
+                "path": "research_paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "review_url",
+          "type": "string"
+        },
+        {
+          "name": "proposed_reward",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_research",
+      "discriminator": [
+        67,
+        217,
+        131,
+        205,
+        160,
+        157,
+        81,
+        205
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "research_paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "research_paper.author",
+                "account": "ResearchPaper"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "encrypted_url",
+          "type": "string"
+        },
+        {
+          "name": "encryption_key",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "user_withdraw",
+      "discriminator": [
+        53,
+        254,
+        26,
+        242,
+        119,
+        237,
+        73,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "verify_review",
+      "discriminator": [
+        97,
+        251,
+        145,
+        202,
+        132,
+        80,
+        96,
+        15
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "peer_review",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  105,
+                  101,
+                  119
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "peer_review.reviewer",
+                "account": "PeerReview"
+              },
+              {
+                "kind": "account",
+                "path": "peer_review.reviewed_paper",
+                "account": "PeerReview"
+              }
+            ]
+          }
+        },
+        {
+          "name": "research_paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "peer_review.reviewed_paper",
+                "account": "PeerReview"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reviewer_user_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer_user_account.owner",
+                "account": "User"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author_user_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author_user_account.owner",
+                "account": "User"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reviewer_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "reviewer_user_account.owner",
+                "account": "User"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author"
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "accept_proposed_review",
+          "type": "bool"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -386,6 +900,19 @@
         203,
         172,
         176
+      ]
+    },
+    {
+      "name": "PeerReview",
+      "discriminator": [
+        13,
+        168,
+        128,
+        102,
+        214,
+        123,
+        208,
+        229
       ]
     },
     {
@@ -433,12 +960,12 @@
     },
     {
       "code": 6003,
-      "name": "PaperUrlEmpty",
+      "name": "PaperUrlEmptyOrTooLong",
       "msg": "Research Paper URL/CID cannot be empty"
     },
     {
       "code": 6004,
-      "name": "EncryptionKeyEmpty",
+      "name": "EncryptionKeyEmptyOrTooLong",
       "msg": "Protocol Encryption Key cannot be empty"
     },
     {
@@ -508,7 +1035,7 @@
     },
     {
       "code": 6018,
-      "name": "NotPurchased",
+      "name": "PaperNotPurchased",
       "msg": "You must purchase the paper before reviewing it"
     }
   ],
@@ -525,6 +1052,46 @@
           {
             "name": "purchased_paper",
             "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PeerReview",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "reviewer",
+            "type": "pubkey"
+          },
+          {
+            "name": "reviewed_paper",
+            "type": "pubkey"
+          },
+          {
+            "name": "review_url",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "ReviewStatus"
+              }
+            }
+          },
+          {
+            "name": "proposed_reward",
+            "type": "u64"
           },
           {
             "name": "timestamp",
@@ -581,6 +1148,23 @@
           {
             "name": "bump",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReviewStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Accepted"
+          },
+          {
+            "name": "Rejected"
           }
         ]
       }
