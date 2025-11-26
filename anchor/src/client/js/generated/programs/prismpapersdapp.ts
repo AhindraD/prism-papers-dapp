@@ -199,26 +199,26 @@ export type ParsedPrismpapersdappInstruction<
   TProgram extends string = '2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv',
 > =
   | ({
-    instructionType: PrismpapersdappInstruction.AdminWithdraw;
-  } & ParsedAdminWithdrawInstruction<TProgram>)
+      instructionType: PrismpapersdappInstruction.AdminWithdraw;
+    } & ParsedAdminWithdrawInstruction<TProgram>)
   | ({
-    instructionType: PrismpapersdappInstruction.InitResearch;
-  } & ParsedInitResearchInstruction<TProgram>)
+      instructionType: PrismpapersdappInstruction.InitResearch;
+    } & ParsedInitResearchInstruction<TProgram>)
   | ({
-    instructionType: PrismpapersdappInstruction.InitUser;
-  } & ParsedInitUserInstruction<TProgram>)
+      instructionType: PrismpapersdappInstruction.InitUser;
+    } & ParsedInitUserInstruction<TProgram>)
   | ({
-    instructionType: PrismpapersdappInstruction.PurchaseAccess;
-  } & ParsedPurchaseAccessInstruction<TProgram>)
+      instructionType: PrismpapersdappInstruction.PurchaseAccess;
+    } & ParsedPurchaseAccessInstruction<TProgram>)
   | ({
-    instructionType: PrismpapersdappInstruction.ReviewPaper;
-  } & ParsedReviewPaperInstruction<TProgram>)
+      instructionType: PrismpapersdappInstruction.ReviewPaper;
+    } & ParsedReviewPaperInstruction<TProgram>)
   | ({
-    instructionType: PrismpapersdappInstruction.UpdateResearch;
-  } & ParsedUpdateResearchInstruction<TProgram>)
+      instructionType: PrismpapersdappInstruction.UpdateResearch;
+    } & ParsedUpdateResearchInstruction<TProgram>)
   | ({
-    instructionType: PrismpapersdappInstruction.UserWithdraw;
-  } & ParsedUserWithdrawInstruction<TProgram>)
+      instructionType: PrismpapersdappInstruction.UserWithdraw;
+    } & ParsedUserWithdrawInstruction<TProgram>)
   | ({
-    instructionType: PrismpapersdappInstruction.VerifyReview;
-  } & ParsedVerifyReviewInstruction<TProgram>);
+      instructionType: PrismpapersdappInstruction.VerifyReview;
+    } & ParsedVerifyReviewInstruction<TProgram>);

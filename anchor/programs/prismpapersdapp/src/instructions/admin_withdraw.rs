@@ -24,7 +24,7 @@ pub struct AdminWithdraw<'info> {
 }
 
 impl<'a> AdminWithdraw<'a> {
-    pub fn admin_withdraw(&mut self, amount: u64) -> Result<()> {
+    pub fn admin_withdraw(&mut self, amount: u64, bumps: &AdminWithdrawBumps) -> Result<()> {
         require!(
             self.admin_vault.lamports() >= amount,
             ErrorCodes::InsufficientFundsInVault
@@ -41,7 +41,8 @@ impl<'a> AdminWithdraw<'a> {
             from: admin_vault,
             to: admin,
         };
-        let cpi_ctx = CpiContext::new(cpi_program, cpi_account_options);
+        let signer_seeds: &[&[&[u8]]] = &[&[VAULT_SEED_ADMIN, &[bumps.admin_vault]]];
+        let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_account_options, signer_seeds);
         transfer(cpi_ctx, amount)?;
 
         Ok(())

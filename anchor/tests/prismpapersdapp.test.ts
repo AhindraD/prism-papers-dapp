@@ -162,7 +162,7 @@ describe('prismpapersdapp', () => {
     const ix = getInitResearchInstruction({
       title: "Quantum Mechanics",
       description: "A deep dive.",
-      price: 100000000n, // 0.1 SOL
+      price: 1000000000n, // 1 SOL
       encryptedUrl: "arweave_cid",
       encryptionKey: "lit_key",
       author: author,
@@ -410,6 +410,10 @@ describe('prismpapersdapp', () => {
       programAddress: PROGRAM_ID,
       seeds: [VAULT_USER_SEED, getAddressEncoder().encode(author.address)],
     });
+    const balanceResponse = await rpc.getBalance(userVault).send();
+
+    // Log the value (it returns a bigint)
+    console.log("User Vault Balance:", balanceResponse.value);
 
     // Author should have earned money from the purchase earlier
     const ix = getUserWithdrawInstruction({
@@ -417,7 +421,6 @@ describe('prismpapersdapp', () => {
       user: author,
       userVault: userVault
     });
-
     const sx = await sendAndConfirm({ ix, payer: author });
     expect(sx).toBeDefined();
   });
@@ -427,7 +430,10 @@ describe('prismpapersdapp', () => {
       programAddress: PROGRAM_ID,
       seeds: [VAULT_ADMIN_SEED],
     });
+    const balanceResponse = await rpc.getBalance(adminVault).send();
 
+    // Log the value (it returns a bigint)
+    console.log("Admin Vault Balance:", balanceResponse.value);
     const ix = getAdminWithdrawInstruction({
       amount: 1000n,
       admin: admin,
@@ -464,6 +470,6 @@ async function sendAndConfirm({ ix, payer }: { ix: Instruction; payer: KeyPairSi
 }
 
 async function requestAirdrop(address: Address) {
-  await rpc.requestAirdrop(address, 2000000000n as any).send();
+  await rpc.requestAirdrop(address, 10000000000n as any).send();
   await new Promise(r => setTimeout(r, 1000));
 }

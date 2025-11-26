@@ -66,10 +66,12 @@ pub mod prismpapersdapp {
     }
 
     pub fn user_withdraw(ctx: Context<UserWithdraw>, amount: u64) -> Result<()> {
-        ctx.accounts.user_withdraw(amount)
+        let bumps = ctx.bumps;
+        ctx.accounts.user_withdraw(amount, &bumps)
     }
 
     pub fn admin_withdraw(ctx: Context<AdminWithdraw>, amount: u64) -> Result<()> {
-        ctx.accounts.admin_withdraw(amount)
+        let bumps = ctx.bumps;
+        ctx.accounts.admin_withdraw(amount, &bumps)
     }
 }

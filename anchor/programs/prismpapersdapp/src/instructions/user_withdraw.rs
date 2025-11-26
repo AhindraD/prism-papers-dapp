@@ -21,7 +21,7 @@ pub struct UserWithdraw<'info> {
 }
 
 impl<'a> UserWithdraw<'a> {
-    pub fn user_withdraw(&mut self, amount: u64) -> Result<()> {
+    pub fn user_withdraw(&mut self, amount: u64, bumps: &UserWithdrawBumps) -> Result<()> {
         require!(
             self.user_vault.lamports() >= amount,
             ErrorCodes::InsufficientFundsInVault
@@ -34,7 +34,10 @@ impl<'a> UserWithdraw<'a> {
             from: user_vault,
             to: user,
         };
-        let cpi_ctx = CpiContext::new(cpi_program, cpi_account_options);
+        let binding = self.user.key();
+        let signer_seeds: &[&[&[u8]]] =
+            &[&[VAULT_SEED_USER, binding.as_ref(), &[bumps.user_vault]]];
+        let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_account_options, signer_seeds);
         transfer(cpi_ctx, amount)?;
 
         Ok(())
