@@ -117,6 +117,11 @@ impl<'a> VerifyReview<'a> {
             transfer(cpi_ctx, platform_fee)?;
 
             self.peer_review.status = ReviewStatus::Accepted;
+            self.reviewer_user_account.earning = self
+                .reviewer_user_account
+                .earning
+                .checked_add(reviewer_earning)
+                .ok_or(ErrorCodes::MathOverflow)?;
         } else {
             self.peer_review.status = ReviewStatus::Rejected;
         }
