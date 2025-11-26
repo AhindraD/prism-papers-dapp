@@ -1,7 +1,7 @@
 pub mod admin_withdraw;
 pub mod init_research;
 pub mod init_user;
-pub mod peer_review;
+pub mod review_paper;
 pub mod purchase_access;
 pub mod update_research;
 pub mod user_withdraw;
@@ -9,7 +9,7 @@ pub mod verify_review;
 pub use admin_withdraw::*;
 pub use init_research::*;
 pub use init_user::*;
-pub use peer_review::*;
+pub use review_paper::*;
 pub use purchase_access::*;
 pub use update_research::*;
 pub use user_withdraw::*;

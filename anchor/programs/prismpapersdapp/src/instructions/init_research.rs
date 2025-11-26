@@ -54,11 +54,11 @@ impl<'a> InitResearch<'a> {
         );
         require!(
             encrypted_url.len() > 0 && encrypted_url.len() < PAPER_URL_MAX_LENGTH,
-            ErrorCodes::PaperUrlEmpty
+            ErrorCodes::PaperUrlEmptyOrTooLong
         );
         require!(
             encryption_key.len() > 0 && encryption_key.len() < ENCRYPTION_KEY_MAX_LENGTH,
-            ErrorCodes::EncryptionKeyEmpty
+            ErrorCodes::EncryptionKeyEmptyOrTooLong
         );
         require!(price > 0, ErrorCodes::ResearchPriceInvalid);
 

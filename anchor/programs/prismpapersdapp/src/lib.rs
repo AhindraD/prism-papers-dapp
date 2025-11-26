@@ -34,9 +34,29 @@ pub mod prismpapersdapp {
             &bumps,
         )
     }
+    pub fn update_research(
+        ctx: Context<UpdateResearch>,
+        title: String,
+        description: String,
+        price: u64,
+        encrypted_url: String,
+        encryption_key: String,
+    ) -> Result<()> {
+        ctx.accounts
+            .update_research(title, description, price, encrypted_url, encryption_key)
+    }
 
     pub fn purchase_access(ctx: Context<PurchaseAccess>) -> Result<()> {
         let bumps = ctx.bumps;
         ctx.accounts.purchase_access(&bumps)
+    }
+    pub fn review_paper(
+        ctx: Context<ReviewPaper>,
+        review_url: String,
+        proposed_reward: u64,
+    ) -> Result<()> {
+        let bumps = ctx.bumps;
+        ctx.accounts
+            .review_paper(review_url, proposed_reward, &bumps)
     }
 }

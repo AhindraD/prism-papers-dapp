@@ -12,10 +12,10 @@ pub enum ErrorCodes {
     PaperDescriptionInvalid,
 
     #[msg("Research Paper URL/CID cannot be empty")]
-    PaperUrlEmpty,
+    PaperUrlEmptyOrTooLong,
 
     #[msg("Protocol Encryption Key cannot be empty")]
-    EncryptionKeyEmpty,
+    EncryptionKeyEmptyOrTooLong,
 
     #[msg("Review Link/CID cannot be empty")]
     ReviewUrlEmpty,
@@ -57,5 +57,5 @@ pub enum ErrorCodes {
     ReviewNotPending,
 
     #[msg("You must purchase the paper before reviewing it")]
-    NotPurchased,
+    PaperNotPurchased,
 }
