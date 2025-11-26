@@ -6,14 +6,14 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-prismpapersdapp = "JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H"
+prismpapersdapp = "2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "localnet"
-wallet = "~/.config/solana/id.json"
+wallet = "~/menageri3.json"
 
 [scripts]
 test = "vitest"
