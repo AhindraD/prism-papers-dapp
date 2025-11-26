@@ -63,6 +63,8 @@ impl<'a> InitResearch<'a> {
         require!(price > 0, ErrorCodes::ResearchPriceInvalid);
 
         let author = self.author.key();
+
+        //updating the states
         self.research_paper.set_inner(ResearchPaper {
             author,
             title,

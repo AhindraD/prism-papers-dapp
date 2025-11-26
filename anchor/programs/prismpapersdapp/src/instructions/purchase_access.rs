@@ -1,4 +1,7 @@
-use anchor_lang::prelude::*;
+use anchor_lang::{
+    prelude::*,
+    system_program::{transfer, Transfer},
+};
 
 use crate::{
     constants::{
@@ -75,16 +78,69 @@ impl<'a> PurchaseAccess<'a> {
         );
         require!(
             self.buyer.key() != self.research_paper.author,
-            ErrorCodes::PublisherCantBuySelf
+            ErrorCodes::AuthorCantBuySelf
         );
         require!(
             self.buyer.lamports() >= self.research_paper.price,
             ErrorCodes::InsufficientFundsInWallet
         );
 
+        //calculating the platform fee and author amount
         let total_amount = self.research_paper.price;
         let platform_fee = total_amount
             .checked_mul(GLOBAL_FEE_PERCENTAGE / 100)
+            .ok_or(ErrorCodes::MathOverflow)?;
+        let author_earning = total_amount
+            .checked_sub(platform_fee)
+            .ok_or(ErrorCodes::MathOverflow)?;
+
+        //transferring the author amount to the author vault
+        let cpi_program = self.system_program.to_account_info();
+        let buyer = self.buyer.to_account_info();
+        let author_vault = self.author_vault.to_account_info();
+        let cpi_account_options_author = Transfer {
+            from: buyer,
+            to: author_vault,
+        };
+        let cpi_ctx_author = CpiContext::new(cpi_program, cpi_account_options_author);
+        transfer(cpi_ctx_author, author_earning)?;
+
+        //transferring the platform fee to the admin vault
+        let cpi_program = self.system_program.to_account_info();
+        let buyer = self.buyer.to_account_info();
+        let admin_vault = self.admin_vault.to_account_info();
+        let cpi_account_options_admin = Transfer {
+            from: buyer.to_account_info(),
+            to: admin_vault,
+        };
+        let cpi_ctx_admin = CpiContext::new(cpi_program, cpi_account_options_admin);
+        transfer(cpi_ctx_admin, platform_fee)?;
+
+        //storing the receipt
+        let buyer = self.buyer.key();
+        let purchased_paper = self.research_paper.key();
+        self.access_receipt.set_inner(AccessReceipt {
+            buyer,
+            purchased_paper,
+            timestamp: Clock::get()?.unix_timestamp,
+            bump: bumps.access_receipt,
+        });
+        //updating the states
+        self.buyer_user_account
+            .purchased
+            .checked_add(1u16)
+            .ok_or(ErrorCodes::MathOverflow)?;
+        self.research_paper
+            .sales
+            .checked_add(1u32)
+            .ok_or(ErrorCodes::MathOverflow)?;
+        self.author_user_account
+            .earning
+            .checked_add(author_earning)
+            .ok_or(ErrorCodes::MathOverflow)?;
+        self.author_user_account
+            .sold
+            .checked_add(1u16)
             .ok_or(ErrorCodes::MathOverflow)?;
 
         Ok(())

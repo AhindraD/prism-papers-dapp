@@ -45,6 +45,7 @@ impl<'a> InitUser<'a> {
             published: USER_INIT_STAT,
             purchased: USER_INIT_STAT,
             reviewed: USER_INIT_STAT,
+            sold: USER_INIT_STAT,
             earning: 0u64,
             timestamp: Clock::get()?.unix_timestamp,
             bump: bumps.user_account,

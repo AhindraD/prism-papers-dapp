@@ -10,6 +10,7 @@ pub struct User {
     pub name: String,
     pub published: u16,
     pub purchased: u16,
+    pub sold: u16,
     pub reviewed: u16,
     pub earning: u64,
     pub timestamp: i64,

@@ -42,10 +42,10 @@ pub enum ErrorCodes {
     UnauthorizedUpdate,
 
     #[msg("You cannot buy your own research paper")]
-    PublisherCantBuySelf,
+    AuthorCantBuySelf,
 
     #[msg("You cannot review your own research paper")]
-    PublisherCantReviewSelf,
+    AuthorCantReviewSelf,
 
     #[msg("You have already purchased this paper")]
     AlreadyPurchased,
