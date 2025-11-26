@@ -88,7 +88,9 @@ impl<'a> PurchaseAccess<'a> {
         //calculating the platform fee and author amount
         let total_amount = self.research_paper.price;
         let platform_fee = total_amount
-            .checked_mul(GLOBAL_FEE_PERCENTAGE / 100)
+            .checked_mul(GLOBAL_FEE_PERCENTAGE) // e.g., 100 * 5 = 500
+            .ok_or(ErrorCodes::MathOverflow)?
+            .checked_div(100) // e.g., 500 / 100 = 5
             .ok_or(ErrorCodes::MathOverflow)?;
         let author_earning = total_amount
             .checked_sub(platform_fee)

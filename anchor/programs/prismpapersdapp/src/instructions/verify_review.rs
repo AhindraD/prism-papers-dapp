@@ -87,7 +87,9 @@ impl<'a> VerifyReview<'a> {
                 ErrorCodes::InsufficientFundsInWallet
             );
             let platform_fee = total_amount
-                .checked_mul(GLOBAL_FEE_PERCENTAGE / 100)
+                .checked_mul(GLOBAL_FEE_PERCENTAGE)
+                .ok_or(ErrorCodes::MathOverflow)?
+                .checked_div(100)
                 .ok_or(ErrorCodes::MathOverflow)?;
             let reviewer_earning = total_amount
                 .checked_sub(platform_fee)
