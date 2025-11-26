@@ -32,6 +32,9 @@ pub enum ErrorCodes {
     #[msg("User does not have enough accrued earnings for this withdrawal")]
     InsufficientUserEarnings,
 
+    #[msg("The buyer/reviewer/author does not have enough SOL in their wallet")]
+    InsufficientFundsInWallet,
+
     #[msg("You are not authorized to perform this action (Admin Only)")]
     UnauthorizedAdmin,
 
