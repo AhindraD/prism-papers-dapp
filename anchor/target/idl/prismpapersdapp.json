@@ -8,10 +8,626 @@
   },
   "instructions": [
     {
-      "name": "greet",
-      "discriminator": [203, 194, 3, 150, 228, 58, 181, 62],
-      "accounts": [],
+      "name": "init_research",
+      "discriminator": [
+        244,
+        75,
+        131,
+        90,
+        164,
+        217,
+        220,
+        42
+      ],
+      "accounts": [
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "research_paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user_account.owner",
+                "account": "User"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "encrypted_url",
+          "type": "string"
+        },
+        {
+          "name": "encryption_key",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "init_user",
+      "discriminator": [
+        14,
+        51,
+        68,
+        159,
+        237,
+        78,
+        158,
+        102
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "user_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "purchase_access",
+      "discriminator": [
+        191,
+        249,
+        111,
+        210,
+        163,
+        248,
+        87,
+        242
+      ],
+      "accounts": [
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "research_paper",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  97,
+                  112,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "research_paper.author",
+                "account": "ResearchPaper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyer_user_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "buyer_user_account.owner",
+                "account": "User"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyer_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author_user_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "research_paper.author",
+                "account": "ResearchPaper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  117,
+                  115,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "research_paper.author",
+                "account": "ResearchPaper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  97,
+                  100,
+                  109,
+                  105,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "access_receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              },
+              {
+                "kind": "account",
+                "path": "research_paper"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
       "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AccessReceipt",
+      "discriminator": [
+        160,
+        208,
+        81,
+        74,
+        140,
+        203,
+        172,
+        176
+      ]
+    },
+    {
+      "name": "ResearchPaper",
+      "discriminator": [
+        103,
+        125,
+        147,
+        192,
+        213,
+        248,
+        70,
+        245
+      ]
+    },
+    {
+      "name": "User",
+      "discriminator": [
+        159,
+        117,
+        95,
+        227,
+        239,
+        151,
+        58,
+        236
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UserNameInvalid",
+      "msg": "User name cannot be empty or too long"
+    },
+    {
+      "code": 6001,
+      "name": "PaperTitleInvalid",
+      "msg": "Research Paper Title cannot be empty or too long"
+    },
+    {
+      "code": 6002,
+      "name": "PaperDescriptionInvalid",
+      "msg": "Research Paper Description cannot be empty or too long"
+    },
+    {
+      "code": 6003,
+      "name": "PaperUrlEmpty",
+      "msg": "Research Paper URL/CID cannot be empty"
+    },
+    {
+      "code": 6004,
+      "name": "EncryptionKeyEmpty",
+      "msg": "Protocol Encryption Key cannot be empty"
+    },
+    {
+      "code": 6005,
+      "name": "ReviewUrlEmpty",
+      "msg": "Review Link/CID cannot be empty"
+    },
+    {
+      "code": 6006,
+      "name": "ResearchPriceInvalid",
+      "msg": "Price must be greater than zero"
+    },
+    {
+      "code": 6007,
+      "name": "MathOverflow",
+      "msg": "Mathematical Operation Overflow"
+    },
+    {
+      "code": 6008,
+      "name": "InsufficientFundsInVault",
+      "msg": "The vault does not have enough SOL to fulfill this request"
+    },
+    {
+      "code": 6009,
+      "name": "InsufficientUserEarnings",
+      "msg": "User does not have enough accrued earnings for this withdrawal"
+    },
+    {
+      "code": 6010,
+      "name": "InsufficientFundsInWallet",
+      "msg": "The buyer/reviewer/author does not have enough SOL in their wallet"
+    },
+    {
+      "code": 6011,
+      "name": "UnauthorizedAdmin",
+      "msg": "You are not authorized to perform this action (Admin Only)"
+    },
+    {
+      "code": 6012,
+      "name": "UnauthorizedUpdate",
+      "msg": "Only the original author can update this paper"
+    },
+    {
+      "code": 6013,
+      "name": "AuthorCantBuySelf",
+      "msg": "You cannot buy your own research paper"
+    },
+    {
+      "code": 6014,
+      "name": "AuthorCantReviewSelf",
+      "msg": "You cannot review your own research paper"
+    },
+    {
+      "code": 6015,
+      "name": "AlreadyPurchased",
+      "msg": "You have already purchased this paper"
+    },
+    {
+      "code": 6016,
+      "name": "AlreadyReviewed",
+      "msg": "You have already submitted a review for this paper"
+    },
+    {
+      "code": 6017,
+      "name": "ReviewNotPending",
+      "msg": "This review has already been processed (Accepted/Rejected)"
+    },
+    {
+      "code": 6018,
+      "name": "NotPurchased",
+      "msg": "You must purchase the paper before reviewing it"
+    }
+  ],
+  "types": [
+    {
+      "name": "AccessReceipt",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "buyer",
+            "type": "pubkey"
+          },
+          {
+            "name": "purchased_paper",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ResearchPaper",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "sales",
+            "type": "u32"
+          },
+          {
+            "name": "reviews",
+            "type": "u32"
+          },
+          {
+            "name": "encrypted_url",
+            "type": "string"
+          },
+          {
+            "name": "encryption_key",
+            "type": "string"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "User",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "published",
+            "type": "u16"
+          },
+          {
+            "name": "purchased",
+            "type": "u16"
+          },
+          {
+            "name": "sold",
+            "type": "u16"
+          },
+          {
+            "name": "reviewed",
+            "type": "u16"
+          },
+          {
+            "name": "earning",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
     }
   ]
 }
