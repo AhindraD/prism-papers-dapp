@@ -9,12 +9,12 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.prismpapers.xy
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: 'Prism Papers',
-  description: 'Decentralized Publishing & Reviewing Platform.',
+  description: 'Decentralized Research Publishing & Reviewing Platform.',
 
   // Facebook / Discord / Slack / LinkedIn
   openGraph: {
     title: 'Prism Papers',
-    description: 'Decentralized Publishing & Reviewing Platform.',
+    description: 'Decentralized Research Publishing & Reviewing Platform.',
     url: BASE_URL,
     siteName: 'Prism Papers',
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Prism Papers',
-    description: 'Decentralized Publishing & Reviewing Platform.',
+    description: 'Decentralized Research Publishing & Reviewing Platform.',
     images: ['/opengraph-image.png'],
   },
 }
