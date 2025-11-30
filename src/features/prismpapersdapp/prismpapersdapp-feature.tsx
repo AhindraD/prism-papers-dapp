@@ -11,7 +11,7 @@ export default function PrismpapersdappFeature() {
   if (!account) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="hero py-[64px]">
+        <div className="hero py-16">
           <div className="hero-content text-center">
             <WalletDropdown />
           </div>

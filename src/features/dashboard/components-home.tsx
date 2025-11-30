@@ -1,18 +1,6 @@
 import React, { useState, useRef, useEffect, ReactElement } from 'react';
 import {
-    ShieldCheck,
-    Coins,
-    ChevronRight,
-    Github,
-    Twitter,
     ArrowUpRight,
-    Cpu,
-    Hexagon,
-    Lock,
-    Eye,
-    MessageSquareCode,
-    Code,
-    Wallet
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -208,181 +196,6 @@ export function RealisticPrism() {
     );
 }
 
-// --- COMPONENT: NEURAL GLITCH GRID (Background) ---
-export function NeuralGrid() {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const mouse = useRef({ x: -1000, y: -1000 });
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        let points: { x: number, y: number, originX: number, originY: number, color: string, active: number }[] = [];
-        let animationId: number;
-
-        // Cyberpunk palette
-        const colors = ['#00f3ff', '#ff0099', '#bd00ff', '#ffffff'];
-
-        const initPoints = (w: number, h: number) => {
-            points = [];
-            // Dense grid
-            const gap = 40;
-            for (let x = 0; x < w; x += gap) {
-                for (let y = 0; y < h; y += gap) {
-                    points.push({
-                        x, y,
-                        originX: x, originY: y,
-                        color: colors[Math.floor(Math.random() * colors.length)],
-                        active: 0
-                    });
-                }
-            }
-        };
-
-        const handleResize = () => {
-            if (!containerRef.current) return;
-            const { clientWidth, clientHeight } = containerRef.current;
-            const dpr = window.devicePixelRatio || 1;
-            canvas.width = clientWidth * dpr;
-            canvas.height = clientHeight * dpr;
-            ctx.scale(dpr, dpr);
-            initPoints(clientWidth, clientHeight);
-        };
-
-        const animate = () => {
-            if (!containerRef.current) return;
-            const width = containerRef.current.clientWidth;
-            const height = containerRef.current.clientHeight;
-            ctx.clearRect(0, 0, width, height);
-
-            points.forEach(p => {
-                // Distance to mouse
-                const dx = p.x - mouse.current.x;
-                const dy = p.y - mouse.current.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                const maxDist = 200;
-
-                // React to mouse: Push away + Activate color
-                if (dist < maxDist) {
-                    const force = (maxDist - dist) / maxDist;
-                    const angle = Math.atan2(dy, dx);
-                    // "Explosion" effect
-                    p.x += Math.cos(angle) * force * 5;
-                    p.y += Math.sin(angle) * force * 5;
-                    p.active = 1; // Full activation
-                }
-
-                // Return to origin (Elastic)
-                p.x += (p.originX - p.x) * 0.1;
-                p.y += (p.originY - p.y) * 0.1;
-                p.active *= 0.95; // Decay activation
-
-                // Draw
-                const size = p.active > 0.1 ? 2 + p.active * 2 : 1;
-                ctx.fillStyle = p.active > 0.1 ? p.color : '#1a1a1a'; // Grey when inactive, neon when active
-
-                ctx.beginPath();
-                if (p.active > 0.1) {
-                    // Glow when active
-                    ctx.shadowBlur = 10 * p.active;
-                    ctx.shadowColor = p.color;
-                } else {
-                    ctx.shadowBlur = 0;
-                }
-
-                // Draw as small squares for "digital" feel
-                ctx.fillRect(p.x - size / 2, p.y - size / 2, size, size);
-            });
-
-            // Draw connecting lines only for active points (Neural effect)
-            ctx.shadowBlur = 0;
-            ctx.lineWidth = 0.5;
-            for (let i = 0; i < points.length; i++) {
-                const p1 = points[i];
-                if (p1.active < 0.2) continue; // Optimization
-
-                // Only check neighbors roughly
-                for (let j = i + 1; j < points.length; j++) {
-                    const p2 = points[j];
-                    if (p2.active < 0.2) continue;
-
-                    const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
-                    if (dist < 60) {
-                        ctx.strokeStyle = `rgba(0, 243, 255, ${p1.active * 0.5})`;
-                        ctx.beginPath();
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            animationId = requestAnimationFrame(animate);
-        };
-
-        window.addEventListener('resize', handleResize);
-        window.addEventListener('mousemove', (e) => {
-            if (containerRef.current) {
-                const rect = containerRef.current.getBoundingClientRect();
-                mouse.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-            }
-        });
-        // Mobile Touch Support
-        window.addEventListener('touchmove', (e) => {
-            if (containerRef.current && e.touches[0]) {
-                const rect = containerRef.current.getBoundingClientRect();
-                mouse.current = { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-            }
-        });
-
-        handleResize();
-        animate();
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-            cancelAnimationFrame(animationId);
-        };
-    }, []);
-
-    return (
-        <div ref={containerRef} className="absolute inset-0 z-[-1]">
-            <canvas ref={canvasRef} className="block w-full h-full opacity-60" />
-            {/* Vignette Overlay */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_90%)] pointer-events-none" />
-        </div>
-    );
-}
-
-// --- UI COMPONENTS (Cyber-Portfolio Style) ---
-
-export function NavBar() {
-    return (
-        <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
-            <div className="pointer-events-auto flex items-center gap-8 bg-cyber-gray/80 backdrop-blur-md border border-white/10 px-8 py-3 rounded-full shadow-[0_0_30px_rgba(0,0,0,0.8)]">
-                <div className="flex items-center gap-2">
-                    <Hexagon className="w-5 h-5 text-cyber-neon fill-cyber-neon/20 animate-pulse" />
-                    <span className="font-bold tracking-widest text-sm text-white">PRISM</span>
-                </div>
-                <div className="w-[1px] h-4 bg-white/20" />
-                <div className="hidden md:flex gap-6 text-xs font-mono text-gray-400">
-                    {['ACCOUNT', 'PUBLISH', 'PROTOCOL'].map(item => (
-                        <a key={item} href="#" className="hover:text-cyber-pink transition-colors uppercase tracking-wider font-bold">{item}</a>
-                    ))}
-                </div>
-
-                {/* Fancy Sign In Button */}
-                <button className="group relative flex items-center gap-2 bg-white text-black px-5 py-2 rounded-full text-xs font-bold hover:bg-cyber-neon transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)] overflow-hidden">
-                    <div className="absolute inset-0 bg-cyber-pink/20 translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
-                    <Wallet className="w-4 h-4 relative z-10" />
-                    <span className="relative z-10 tracking-wider">ESTABLISH_UPLINK</span>
-                </button>
-            </div>
-        </nav>
-    )
-}
 
 export function Hero() {
     return (
@@ -491,65 +304,6 @@ const EncryptionTitle = ({ text }: { text: string }) => {
     );
 };
 
-// --- UPDATED FOOTER WITH SMOOTH COLOR ANIMATIONS ---
-export function Footer() {
-    return (
-        <footer className="py-12 border-t border-white/10 relative z-20 bg-cyber-black">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-
-                {/* LEFT: Sponsors */}
-                <div className="flex flex-col items-center md:items-start gap-2">
-                    <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Sponsored By</span>
-                    <a
-                        href="https://solana.org/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-3 group"
-                    >
-                        {/* Simple Solana Logo Path */}
-                        <svg className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" viewBox="0 0 397 311" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M64.6 237.9c2.4-2.4 5.7-3.8 9.2-3.8h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8H6.8c-5.8 0-8.7-7-4.6-11.1l62.4-62.7zM332.1 73.1c-2.4 2.4-5.7 3.8-9.2 3.8H5.5c-5.8 0-8.7-7-4.6-11.1l62.7-62.7c2.4-2.4 5.7-3.8 9.2-3.8h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7zM332.1 155.5c-2.4 2.4-5.7 3.8-9.2 3.8H5.5c-5.8 0-8.7-7-4.6-11.1l62.7-62.7c2.4-2.4 5.7-3.8 9.2-3.8h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7z" fill="currentColor" />
-                        </svg>
-
-                        {/* Smooth Color Animation Text */}
-                        <span className="font-bold text-sm tracking-wide text-gray-400 bg-clip-text transition-all duration-500
-                        hover:text-transparent
-                        hover:bg-gradient-to-r hover:from-cyber-neon hover:via-white hover:to-cyber-pink">
-                            SOLANA FOUNDATION
-                        </span>
-                    </a>
-                </div>
-
-                {/* CENTER: Brand */}
-                <div className="flex flex-col items-center gap-2">
-                    <Hexagon className="w-8 h-8 text-cyber-gray fill-cyber-gray" />
-                    <p className="font-mono text-xs text-gray-600 uppercase tracking-widest text-center">
-                        PrismPapers // DeSci Protocol v1.0 <br />
-                        2025
-                    </p>
-                </div>
-
-                {/* RIGHT: Engineer */}
-                <div className="flex flex-col items-center md:items-end gap-2">
-                    <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Engineered By</span>
-                    <a
-                        href="https://github.com/AhindraD"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-3 group"
-                    >
-                        {/* Smooth Color Animation Text */}
-                        <span className="font-bold text-sm tracking-wide text-gray-400 bg-clip-text transition-all duration-500 hover:text-transparent hover:bg-gradient-to-r hover:from-cyber-pink hover:via-white hover:to-cyber-neon">
-                            AhindraD
-                        </span>
-                        <Github className="w-5 h-5 text-gray-400 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
-                    </a>
-                </div>
-
-            </div>
-        </footer>
-    )
-}
 
 export function AboutSection() {
     return (
@@ -561,7 +315,7 @@ export function AboutSection() {
                     {/* LIVE ENCRYPTION TITLE */}
                     <EncryptionTitle text="PRISM PAPERS" />
 
-                    <div className="w-24 h-1 bg-gradient-to-r from-transparent via-cyber-neon to-transparent mt-4" />
+                    <div className="w-24 h-1 bg-linear-to-r from-transparent via-cyber-neon to-transparent mt-4" />
                 </div>
 
                 <div className="prose prose-invert mx-auto">

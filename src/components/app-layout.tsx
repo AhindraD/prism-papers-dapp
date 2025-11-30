@@ -6,7 +6,9 @@ import { AccountUiChecker } from '@/features/account/ui/account-ui-checker'
 import { ThemeProvider } from './theme-provider'
 import { Toaster } from './ui/sonner'
 import { AppHeader } from './app-header'
-import { Footer } from '@/features/dashboard/components-home'
+import { AppFooter } from './app-footer'
+import { NeuralGrid } from './neural-grid-background'
+
 
 export function AppLayout({
   children,
@@ -18,6 +20,7 @@ export function AppLayout({
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
       <div className="flex flex-col min-h-screen">
+        <NeuralGrid />
         <AppHeader links={links} />
         <main className="grow w-full mx-auto p-4 py-8">
           <ClusterUiChecker>
@@ -25,9 +28,9 @@ export function AppLayout({
           </ClusterUiChecker>
           {children}
         </main>
+        <AppFooter />
       </div>
       <Toaster closeButton />
-      <Footer />
     </ThemeProvider>
   )
 }

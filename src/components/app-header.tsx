@@ -1,11 +1,11 @@
-'use client'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
-import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import { Menu, X, Hexagon } from 'lucide-react'
-import { ThemeSelect } from '@/components/theme-select'
-import { WalletDropdown } from '@/components/wallet-dropdown'
+'use client';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { Menu, X, Hexagon } from 'lucide-react';
+import { ThemeSelect } from '@/components/theme-select';
+import { WalletDropdown } from '@/components/wallet-dropdown';
 
 const ClusterDropdown = dynamic(() => import('@/components/cluster-dropdown').then((m) => m.ClusterDropdown), {
   ssr: false,
@@ -34,7 +34,7 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center ml-6">
-            <div className="w-[1px] h-6 bg-white/10 mr-6" />
+            <div className="w-px h-6 bg-white/10 mr-6" />
             <ul className="flex gap-8">
               {links.map(({ label, path }) => (
                 <li key={path}>
