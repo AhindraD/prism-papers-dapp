@@ -1,4 +1,5 @@
 # CAPSTONE - PrismPapers: The Transparent Research Publishing and Reviewing Platform. [DeSci]
+<img width="1326" height="825" alt="image" src="https://github.com/user-attachments/assets/a203b9d2-c2f0-4e60-9091-f8303970290f" />
 
 ## Deployed on DevNet
 
