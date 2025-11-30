@@ -14,6 +14,7 @@ import {
     Code,
     Wallet
 } from 'lucide-react';
+import Link from 'next/link';
 
 // --- 3D MATH ENGINE (Optimized) ---
 const FOCAL_LENGTH = 350;
@@ -390,41 +391,48 @@ export function Hero() {
 
             <div className="relative z-10 text-center max-w-5xl pointer-events-none">
                 {/* CYBERPUNK BADGE */}
-                <div className="pointer-events-auto inline-flex items-center gap-3 border border-white/10 bg-black/40 backdrop-blur-md px-4 py-2 rounded-none mb-8 animate-fade-in-up">
+                {/* NOTE: Removed opacity-0 and added animationFillMode: both */}
+                <div
+                    className="pointer-events-auto inline-flex items-center gap-3 border border-white/10 bg-black/40 backdrop-blur-md px-4 py-2 rounded-none mb-8 animate-fade-in-up"
+                    style={{ animationFillMode: 'both' }}
+                >
                     <span className="w-2 h-2 bg-cyber-pink rounded-full animate-ping" />
                     <span className="font-mono text-[10px] tracking-[0.2em] text-cyber-neon uppercase">Solana DeSci Network</span>
                 </div>
 
+
                 {/* MASSIVE TYPOGRAPHY */}
-                <h1 className="text-6xl md:text-[8rem] font-black leading-[0.9] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 animate-fade-in-up [animation-delay:100ms] opacity-0 fill-mode-forwards mix-blend-difference text-center">
+                {/* Removed mix-blend-difference and opacity-0 */}
+                <h1
+                    className="text-6xl md:text-[8rem] font-black leading-[0.9] tracking-tighter text-transparent bg-clip-text bg-linear-to-b from-white to-gray-500 animate-fade-in-up text-center"
+                    style={{ animationDelay: '100ms', animationFillMode: 'both', opacity: 0.44 }}
+                >
                     SCIENCE <br />
                     <span className="text-stroke">UNLOCKED</span>
                 </h1>
 
-                <p className="mt-8 max-w-xl mx-auto text-gray-400 font-mono text-sm md:text-base leading-relaxed animate-fade-in-up [animation-delay:300ms] opacity-0 fill-mode-forwards text-center">
-                    Encrypted publishing. <br />
-                    Token-gated peer review. <br />
-                    95% revenue to authors.
-                </p>
-
                 {/* ACTION BUTTONS */}
-                <div className="pointer-events-auto mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 animate-fade-in-up [animation-delay:500ms] opacity-0 fill-mode-forwards">
-                    <button className="group relative px-8 py-4 bg-cyber-neon text-black font-bold text-sm tracking-widest uppercase overflow-hidden hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,243,255,0.4)]">
+                <div
+                    className="pointer-events-auto mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 animate-fade-in-up"
+                    style={{ animationDelay: '500ms', animationFillMode: 'both' }}
+                >
+                    <Link href="/papers" className="group relative px-8 py-4 bg-cyber-neon text-white font-bold text-sm tracking-widest uppercase overflow-hidden hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,243,255,0.4)]">
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                         <span className="relative flex items-center gap-2">Start Reading <ArrowUpRight className="w-4 h-4" /></span>
-                    </button>
-                    <button className="px-8 py-4 border border-white/20 text-white font-mono text-xs uppercase tracking-widest hover:bg-white/5 transition-colors hover:border-cyber-pink">
+                    </Link>
+                    <Link href="/publish" className="px-8 py-4 border border-white/20 text-white font-mono text-xs uppercase tracking-widest hover:bg-white/5 transition-colors hover:border-cyber-pink">
                         Publish Research
-                    </button>
+                    </Link>
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
 
 export function StatsBar() {
     return (
         <div className="border-y border-white/10 bg-cyber-black/50 backdrop-blur-sm relative z-20">
+
             <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
                 {[
                     { label: "// Platform Fee", val: "05%" },
