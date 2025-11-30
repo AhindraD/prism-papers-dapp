@@ -3,6 +3,7 @@
 ## Deployed on DevNet
 
 - **Program ID:** [2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv](https://solscan.io/account/2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv?cluster=devnet)
+- **Live Frontend:** [https://www.prismpapers.xyz/](https://www.prismpapers.xyz/)
 - **Live Frontend:** [https://prism-papers-dapp.vercel.app/](https://prism-papers-dapp.vercel.app/)
 
 ## [PrismPapers - Architectural Diagram](https://app.eraser.io/workspace/srtYuk9xciXjH6IUKwJs)
