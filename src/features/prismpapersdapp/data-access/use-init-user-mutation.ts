@@ -3,9 +3,9 @@ import { toast } from 'sonner'
 import { getInitUserInstruction } from '@project/anchor'
 import { UiWalletAccount, useWalletUiSigner, useWalletUiCluster } from '@wallet-ui/react'
 import { useWalletUiSignAndSend } from '@wallet-ui/react-gill'
-import { address, getAddressEncoder, getProgramDerivedAddress } from 'gill'
+import { address, getAddressEncoder, getProgramDerivedAddress, KeyPairSigner } from 'gill'
 
-const USER_SEED = new TextEncoder().encode("user");
+export const USER_SEED = new TextEncoder().encode("user");
 const VAULT_USER_SEED = new TextEncoder().encode("vault_user");
 
 export function useInitUserMutation({ account }: { account: UiWalletAccount }) {
@@ -35,7 +35,7 @@ export function useInitUserMutation({ account }: { account: UiWalletAccount }) {
       // 3. Create Instruction
       const instruction = getInitUserInstruction({
         name: name,
-        owner: { address: userAddress } as any,
+        owner: { address: userAddress } as KeyPairSigner,
         userAccount: userAccount,
         userVault: userVault,
       });

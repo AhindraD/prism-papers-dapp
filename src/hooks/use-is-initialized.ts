@@ -1,9 +1,6 @@
-import { SolanaClusterId, useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
+import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
 import {
-    Blockhash,
     createSolanaClient,
-    createTransaction,
-    Instruction,
     address,
     getAddressEncoder,
     getProgramDerivedAddress,
@@ -11,42 +8,41 @@ import {
 // Import generated helpers from your SDK
 import { useQuery } from '@tanstack/react-query';
 
-import { PRISMPAPERSDAPP_PROGRAM_ADDRESS } from '@project/anchor'; 
-// Import the specific account fetcher if available from your codama generation
-// Otherwise we check lamports/existence via RPC
-// import { fetchUser } from '@/anchor/src'; 
+import { PRISMPAPERSDAPP_PROGRAM_ADDRESS } from '@project/anchor';
+
 
 const USER_SEED = new TextEncoder().encode("user");
 
 export function useIsInitialized() {
     const { account } = useWalletUi();
-    const { cluster } = useWalletUiCluster();
-    const PROGRAM_ID = PRISMPAPERSDAPP_PROGRAM_ADDRESS;
+    const { rpc } = createSolanaClient({
+        urlOrMoniker: "devnet",
+    });
 
-    // return useQuery({
-    //     queryKey: ['is-user-initialized', account?.address?.toString()],
-    //     enabled: !!account,
-    //     queryFn: async () => {
-    //         if (!account) return false;
+    const { data: isInitialized, isLoading } = useQuery({
+        queryKey: ['is-user-initialized', account?.address.toString()],
+        enabled: !!account,
+        queryFn: async () => {
+            if (!account) return false;
+            const userAddress = address(account.address.toString());
+            const programAddress = address(PRISMPAPERSDAPP_PROGRAM_ADDRESS);
 
-    //         // 1. Derive the User Profile PDA
-    //         // We must use the Gill/Solana-Kit address format
-    //         const userAddress = address(account.address);
+            const [userAccountPda] = await getProgramDerivedAddress({
+                programAddress,
+                seeds: [
+                    USER_SEED,
+                    getAddressEncoder().encode(userAddress)
+                ],
+            });
 
-    //         const [userProfilePda] = await getProgramDerivedAddress({
-    //             programAddress: address(PROGRAM_ID),
-    //             seeds: [
-    //                 USER_SEED,
-    //                 getAddressEncoder().encode(userAddress)
-    //             ],
-    //         });
+            // Fetch the account information
+            const accountInfo = await rpc.getAccountInfo(userAccountPda).send();
+            return accountInfo.value !== null;
+        }
+    });
 
-    //         // 2. Fetch the account info
-    //         const accountInfo = await cluster.url.getAccountInfo(userProfilePda).send();
-
-    //         // If account exists (not null) and has data, the user is initialized
-    //         return !!accountInfo;
-    //     },
-    //     staleTime: 60000, // Cache for 1 minute
-    // });
+    return {
+        isInitialized,
+        isLoading,
+    };
 }

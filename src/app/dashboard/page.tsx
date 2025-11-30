@@ -1,8 +1,3 @@
-'use client'
-import { WalletDropdown } from "@/components/wallet-dropdown"
-import { OnboardingForm } from "@/components/onboarding-form"
-import { useWalletUi } from "@wallet-ui/react";
-import { Wallet } from "lucide-react";
 import { UserGuard } from "@/components/user-guard";
 
 
