@@ -6,8 +6,11 @@ export function PrismpapersdappUiCreate({ account }: { account: UiWalletAccount 
   const greetMutation = useGreetMutation({ account })
 
   return (
-    <Button onClick={() => greetMutation.mutateAsync()} disabled={greetMutation.isPending}>
-      Run program{greetMutation.isPending && '...'}
+    <Button
+    // onClick={() => greetMutation.mutateAsync()} 
+    // disabled={greetMutation.isPending}
+    >
+      Run program{ }
     </Button>
   )
 }

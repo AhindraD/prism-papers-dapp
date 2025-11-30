@@ -12,6 +12,7 @@ import { ellipsify, UiWallet, useWalletUi, useWalletUiWallet } from '@wallet-ui/
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
+import { Wallet } from 'lucide-react'
 
 function WalletAvatar({ className, wallet }: { className?: string; wallet: UiWallet }) {
   return (
@@ -46,7 +47,11 @@ function WalletDropdown() {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="cursor-pointer">
           {wallet?.icon ? <WalletAvatar wallet={wallet} /> : null}
-          {connected ? (account ? ellipsify(account.address) : wallet?.name) : 'Select Wallet'}
+          {connected ? (account ? ellipsify(account.address) : wallet?.name) :
+            <>
+              <Wallet className="w-4 h-4 relative z-10" />
+              <span className="ml-2">Connect </span>
+            </>}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

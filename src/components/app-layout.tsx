@@ -6,7 +6,7 @@ import { AccountUiChecker } from '@/features/account/ui/account-ui-checker'
 import { ThemeProvider } from './theme-provider'
 import { Toaster } from './ui/sonner'
 import { AppHeader } from './app-header'
-import { AppFooter } from './app-footer'
+import { Footer } from '@/features/dashboard/components-home'
 
 export function AppLayout({
   children,
@@ -16,18 +16,18 @@ export function AppLayout({
   links: { label: string; path: string }[]
 }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
       <div className="flex flex-col min-h-screen">
         <AppHeader links={links} />
-        <main className="flex-grow container mx-auto p-4">
+        <main className="flex-grow container mx-auto p-4 py-8">
           <ClusterUiChecker>
             <AccountUiChecker />
           </ClusterUiChecker>
           {children}
         </main>
-        <AppFooter />
       </div>
       <Toaster closeButton />
+      <Footer />
     </ThemeProvider>
   )
 }
