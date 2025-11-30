@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-prismpapersdapp = "2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv"
+prismpapersdapp = "CFU5VpGLgQLwq9aYCcraWuuSmewQcPsnco9FVRhjAqqC"
 
 [registry]
 url = "https://api.apr.dev"
@@ -17,4 +17,3 @@ wallet = "~/menageri3.json"
 
 [scripts]
 test = "vitest"
-# test = "pnpm run vitest"

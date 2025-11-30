@@ -1,4 +1,4 @@
-import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
+import { useWalletUi } from '@wallet-ui/react';
 import {
     createSolanaClient,
     address,
@@ -9,16 +9,14 @@ import {
 import { useQuery } from '@tanstack/react-query';
 
 import { PRISMPAPERSDAPP_PROGRAM_ADDRESS } from '@project/anchor';
+import { useSolana } from '@/components/solana/use-solana';
 
 
 const USER_SEED = new TextEncoder().encode("user");
 
 export function useIsInitialized() {
     const { account } = useWalletUi();
-    const { rpc } = createSolanaClient({
-        urlOrMoniker: "devnet",
-    });
-
+    const { client } = useSolana();
     const { data: isInitialized, isLoading } = useQuery({
         queryKey: ['is-user-initialized', account?.address.toString()],
         enabled: !!account,
@@ -36,7 +34,7 @@ export function useIsInitialized() {
             });
 
             // Fetch the account information
-            const accountInfo = await rpc.getAccountInfo(userAccountPda).send();
+            const accountInfo = await client.rpc.getAccountInfo(userAccountPda).send();
             return accountInfo.value !== null;
         }
     });

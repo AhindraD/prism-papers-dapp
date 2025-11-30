@@ -20,7 +20,7 @@ export function useInitUserMutation({ account }: { account: UiWalletAccount }) {
       const userAddress = address(account.address.toString());
 
       // Ensure we use the correct program ID address
-      const programAddress = address("2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv");
+      const programAddress = address("CFU5VpGLgQLwq9aYCcraWuuSmewQcPsnco9FVRhjAqqC");
 
       // 2. Derive PDAs
       const [userAccount] = await getProgramDerivedAddress({

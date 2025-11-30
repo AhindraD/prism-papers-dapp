@@ -6,7 +6,7 @@ mod errors;
 mod instructions;
 use instructions::*;
 mod states;
-declare_id!("2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv");
+declare_id!("CFU5VpGLgQLwq9aYCcraWuuSmewQcPsnco9FVRhjAqqC");
 
 #[program]
 pub mod prismpapersdapp {

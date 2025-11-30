@@ -1,10 +1,10 @@
 # CAPSTONE - PrismPapers: The Transparent Research Publishing and Reviewing Platform. [DeSci]
-<img width="1484" height="978" alt="image" src="https://github.com/user-attachments/assets/95889ffe-7084-472d-af3d-7cb632b9b866" />
 
+<img width="1484" height="978" alt="image" src="https://github.com/user-attachments/assets/95889ffe-7084-472d-af3d-7cb632b9b866" />
 
 ## Deployed on DevNet
 
-- **Program ID:** [2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv](https://solscan.io/account/2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv?cluster=devnet)
+- **Program ID:** [CFU5VpGLgQLwq9aYCcraWuuSmewQcPsnco9FVRhjAqqC](https://solscan.io/account/CFU5VpGLgQLwq9aYCcraWuuSmewQcPsnco9FVRhjAqqC?cluster=devnet)
 - **Live Frontend:** [https://www.prismpapers.xyz/](https://www.prismpapers.xyz/)
 - **Live Frontend:** [https://prism-papers-dapp.vercel.app/](https://prism-papers-dapp.vercel.app/)
 
