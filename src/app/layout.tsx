@@ -4,7 +4,10 @@ import { AppProviders } from '@/components/app-providers';
 import { AppLayout } from '@/components/app-layout';
 import React from 'react';
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.prismpapers.xyz/';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: 'Prism Papers',
   description: 'Decentralized Publishing & Reviewing Platform.',
 }
