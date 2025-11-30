@@ -1,9 +1,9 @@
 import { UiWalletAccount } from '@wallet-ui/react'
 import { Button } from '@/components/ui/button'
-import { useGreetMutation } from '../data-access/use-greet-mutation'
+import { useInitUserMutation } from '../data-access/use-init-user-mutation'
 
 export function PrismpapersdappUiCreate({ account }: { account: UiWalletAccount }) {
-  const greetMutation = useGreetMutation({ account })
+  const greetMutation = useInitUserMutation({ account })
 
   return (
     <Button

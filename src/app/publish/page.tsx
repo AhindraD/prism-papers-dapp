@@ -1,0 +1,19 @@
+'use client'
+import { WalletDropdown } from "@/components/wallet-dropdown"
+import { OnboardingForm } from "@/components/onboarding-form"
+import { useWalletUi } from "@wallet-ui/react";
+import { Wallet } from "lucide-react";
+import { UserGuard } from "@/components/user-guard";
+
+
+export default function Page() {
+  return (
+    <UserGuard>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-6 text-center animate-in fade-in zoom-in duration-500">
+        <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+          Publish
+        </h1>
+      </div>
+    </UserGuard>
+  )
+}
