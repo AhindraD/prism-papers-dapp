@@ -1,6 +1,5 @@
 import { useWalletUi } from '@wallet-ui/react';
 import {
-    createSolanaClient,
     address,
     getAddressEncoder,
     getProgramDerivedAddress,

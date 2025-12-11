@@ -1,4 +1,5 @@
 import { UserGuard } from "@/components/user-guard";
+import Dashboard from "./components/dashboard";
 
 
 export default function Page() {
@@ -6,7 +7,7 @@ export default function Page() {
     <UserGuard>
       <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-6 text-center animate-in fade-in zoom-in duration-500">
         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-          Dashboard
+          <Dashboard />
         </h1>
       </div>
     </UserGuard>
