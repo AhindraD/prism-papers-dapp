@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
+import { useWalletUi } from '@wallet-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Loader2, UserPlus } from 'lucide-react';
-import { useInitUserMutation } from '@/features/prismpapersdapp/data-access/use-init-user-mutation';
-undefined
+import { useInitUserMutation } from '@/features/prismpapersdapp/data-access/instructions/use-init-user-mutation';
+
 
 
 export function OnboardingForm() {

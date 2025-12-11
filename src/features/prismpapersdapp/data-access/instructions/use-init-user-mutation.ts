@@ -5,9 +5,7 @@ import { UiWalletAccount, useWalletUiSigner } from '@wallet-ui/react'
 import { address, getAddressEncoder, getProgramDerivedAddress } from 'gill'
 import { useWalletUiSignAndSend } from '@wallet-ui/react-gill'
 import { toastTx } from '@/components/toast-tx'
-
-export const USER_SEED = new TextEncoder().encode("user");
-const VAULT_USER_SEED = new TextEncoder().encode("vault_user");
+import { USER_SEED, VAULT_USER_SEED } from '../seeds'
 
 export function useInitUserMutation({ account }: { account: UiWalletAccount }) {
   const txSigner = useWalletUiSigner({ account })

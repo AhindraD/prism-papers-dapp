@@ -1,6 +1,5 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
     Copy,
     Wallet,
@@ -13,11 +12,8 @@ import {
     Hexagon,
     Activity
 } from 'lucide-react';
-import { fetchUser, PRISMPAPERSDAPP_PROGRAM_ADDRESS } from '@project/anchor';
-import { useSolana } from '@/components/solana/use-solana';
-import { USER_SEED } from '@/features/prismpapersdapp/data-access/use-init-user-mutation';
-import { getProgramDerivedAddress, getAddressEncoder, address } from 'gill';
 import { useWalletUi } from '@wallet-ui/react';
+import { useUserQuery } from '@/features/prismpapersdapp/data-access/states/use-user-query';
 
 // --- TYPES (Matching your Rust Struct) ---
 interface UserData {
@@ -56,7 +52,7 @@ function DashboardGrid() {
     );
 }
 
-function StatCard({ label, value, icon, delay, color = "cyber-neon" }: { label: string, value: number | string, icon: any, delay: string, color?: string }) {
+function StatCard({ label, value, icon, delay, color = "cyber-neon" }: { label: string, value: number | string, icon: React.ReactElement<{ className?: string }>, delay: string, color?: string }) {
     const colorClasses = {
         "cyber-neon": "text-cyber-neon border-cyber-neon/20 hover:border-cyber-neon/50",
         "cyber-pink": "text-cyber-pink border-cyber-pink/20 hover:border-cyber-pink/50",
@@ -140,43 +136,12 @@ function IdentityModule({ user }: { user: UserData }) {
 }
 
 export default function Dashboard() {
-    const { client } = useSolana();
     const { account } = useWalletUi();
-    async function fetchUserStats() {
-        const programAddress = address(PRISMPAPERSDAPP_PROGRAM_ADDRESS);
-        if (!account) {
-            return MOCK_USER;
-        }
-        const userAddress = address(account.address.toString());
-        const [userAccountPda] = await getProgramDerivedAddress({
-            programAddress,
-            seeds: [
-                USER_SEED,
-                getAddressEncoder().encode(userAddress)
-            ],
-        });
-        const userAccount = await fetchUser(client.rpc, userAccountPda);
-        const userStats: UserData = {
-            owner: userAccount.data.owner.toString(),
-            name: userAccount.data.name,
-            published: userAccount.data.published,
-            purchased: userAccount.data.purchased,
-            sold: userAccount.data.sold,
-            reviewed: userAccount.data.reviewed,
-            earning: userAccount.data.earning.toString(),//convert bigint to string, so React can handle it
-            timestamp: new Date(Number(userAccount.data.timestamp) * 1000).toLocaleDateString(),
-        };
-        return userStats;
-    }
-    const [userStats, setUserStats] = useState<UserData>(MOCK_USER);
-    useEffect(() => {
-        fetchUserStats()
-            .then(userStats => {
-                setUserStats(userStats);
-            }).catch(err => {
-                console.log(err);
-            });
-    }, []);
+
+    //using query hook from data-access
+    const { data, isLoading, isError } = useUserQuery({ account });
+    //if no user initialized, show mock user -> although this should be handled by UserGuard
+    const userStats = (isLoading || isError || !data) ? MOCK_USER : data;
 
     return (
         <main className="min-h-screen bg-cyber-black text-white selection:bg-cyber-pink selection:text-white relative">
