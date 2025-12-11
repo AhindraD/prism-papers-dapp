@@ -10,20 +10,9 @@ export const USER_SEED = new TextEncoder().encode("user");
 const VAULT_USER_SEED = new TextEncoder().encode("vault_user");
 
 export function useInitUserMutation({ account }: { account: UiWalletAccount }) {
-  // 1. Hooks are called here (Top level of this custom hook)
-  // console.log(account)
   const txSigner = useWalletUiSigner({ account })
   const signAndSend = useWalletUiSignAndSend()
 
-  // return useMutation({
-  //   mutationFn: async () => {
-  //     return await signAndSend(getGreetInstruction({ programAddress: PRISMPAPERSDAPP_PROGRAM_ADDRESS }), txSigner)
-  //   },
-  //   onSuccess: (signature) => {
-  //     toastTx(signature)
-  //   },
-  //   onError: () => toast.error('Failed to run program'),
-  // })
   return useMutation({
     mutationFn: async ({ name }: { name: string }) => {
 

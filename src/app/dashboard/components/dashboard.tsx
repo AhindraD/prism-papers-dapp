@@ -13,6 +13,11 @@ import {
     Hexagon,
     Activity
 } from 'lucide-react';
+import { fetchUser, PRISMPAPERSDAPP_PROGRAM_ADDRESS } from '@project/anchor';
+import { useSolana } from '@/components/solana/use-solana';
+import { USER_SEED } from '@/features/prismpapersdapp/data-access/use-init-user-mutation';
+import { getProgramDerivedAddress, getAddressEncoder, address } from 'gill';
+import { useWalletUi } from '@wallet-ui/react';
 
 // --- TYPES (Matching your Rust Struct) ---
 interface UserData {
@@ -22,8 +27,8 @@ interface UserData {
     purchased: number;
     sold: number;
     reviewed: number;
-    earning: number; // in Lamports
-    timestamp: number;
+    earning: string; // in Lamports
+    timestamp: string;
 }
 
 // --- MOCK DATA (Replace with actual Anchor fetch) ---
@@ -34,9 +39,10 @@ const MOCK_USER: UserData = {
     purchased: 45,
     sold: 8,
     reviewed: 23,
-    earning: 5400000000, // 5.4 SOL
-    timestamp: 1704067200, // Jan 1 2024
+    earning: "5400000000", // 5.4 SOL
+    timestamp: "Jan 1, 2024",
 };
+
 
 // --- COMPONENTS ---
 
@@ -82,7 +88,7 @@ function IdentityModule({ user }: { user: UserData }) {
             <div className="relative w-32 h-32 shrink-0 group">
                 <div className="absolute inset-0 bg-cyber-neon/20 blur-2xl rounded-full animate-pulse-slow" />
                 <div className="relative w-full h-full bg-cyber-gray border border-cyber-neon/30 clip-path-hexagon flex items-center justify-center overflow-hidden">
-                    <span className="text-4xl font-bold text-cyber-neon">{user.name.charAt(0)}</span>
+                    <span className="text-4xl font-bold text-cyber-neon">{user.name.charAt(0).toUpperCase()}</span>
                     {/* Scanline */}
                     <div className="absolute inset-0 bg-linear-to-b from-transparent via-cyber-neon/10 to-transparent w-full h-[20%] animate-[scan_2s_linear_infinite]" />
                 </div>
@@ -111,7 +117,7 @@ function IdentityModule({ user }: { user: UserData }) {
                     </div>
                     <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-cyber-purple" />
-                        <span>Joined: {new Date(user.timestamp * 1000).toLocaleDateString()}</span>
+                        <span>Joined: {user.timestamp}</span>
                     </div>
                 </div>
             </div>
@@ -121,7 +127,7 @@ function IdentityModule({ user }: { user: UserData }) {
                 <div className="text-right">
                     <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-1">Unclaimed Rewards</div>
                     <div className="text-3xl font-bold text-cyber-neon tabular-nums">
-                        {(user.earning / 1_000_000_000).toFixed(2)} <span className="text-sm text-gray-400">SOL</span>
+                        {(Number(user.earning) / 1_000_000_000).toFixed(2)} <span className="text-sm text-gray-400">SOL</span>
                     </div>
                 </div>
                 <button className="flex items-center gap-2 bg-cyber-gray hover:bg-cyber-neon hover:text-black border border-cyber-neon/30 px-6 py-2 rounded-sm text-xs font-bold uppercase tracking-wider transition-all group">
@@ -134,16 +140,49 @@ function IdentityModule({ user }: { user: UserData }) {
 }
 
 export default function Dashboard() {
-    const user = MOCK_USER;
+    const { client } = useSolana();
+    const { account } = useWalletUi();
+    async function fetchUserStats() {
+        const programAddress = address(PRISMPAPERSDAPP_PROGRAM_ADDRESS);
+        if (!account) {
+            return MOCK_USER;
+        }
+        const userAddress = address(account.address.toString());
+        const [userAccountPda] = await getProgramDerivedAddress({
+            programAddress,
+            seeds: [
+                USER_SEED,
+                getAddressEncoder().encode(userAddress)
+            ],
+        });
+        const userAccount = await fetchUser(client.rpc, userAccountPda);
+        const userStats: UserData = {
+            owner: userAccount.data.owner.toString(),
+            name: userAccount.data.name,
+            published: userAccount.data.published,
+            purchased: userAccount.data.purchased,
+            sold: userAccount.data.sold,
+            reviewed: userAccount.data.reviewed,
+            earning: userAccount.data.earning.toString(),//convert bigint to string, so React can handle it
+            timestamp: new Date(Number(userAccount.data.timestamp) * 1000).toLocaleDateString(),
+        };
+        return userStats;
+    }
+    const [userStats, setUserStats] = useState<UserData>(MOCK_USER);
+    useEffect(() => {
+        fetchUserStats()
+            .then(userStats => {
+                setUserStats(userStats);
+            }).catch(err => {
+                console.log(err);
+            });
+    }, []);
 
     return (
         <main className="min-h-screen bg-cyber-black text-white selection:bg-cyber-pink selection:text-white relative">
             <DashboardGrid />
 
-            {/* Assume AppHeader is rendered by layout.tsx, or include it here if stand-alone */}
-            {/* <AppHeader /> */}
-
-            <IdentityModule user={user} />
+            <IdentityModule user={userStats} />
 
             <div className="max-w-6xl mx-auto px-6 py-12">
 
@@ -157,28 +196,28 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <StatCard
                         label="Papers Published"
-                        value={user.published.toString().padStart(2, '0')}
+                        value={userStats.published.toString().padStart(2, '0')}
                         icon={<FileText />}
                         color="cyber-neon"
                         delay="100ms"
                     />
                     <StatCard
                         label="Access Granted"
-                        value={user.purchased.toString().padStart(2, '0')}
+                        value={userStats.purchased.toString().padStart(2, '0')}
                         icon={<ShoppingBag />}
                         color="cyber-purple"
                         delay="200ms"
                     />
                     <StatCard
                         label="Copies Sold"
-                        value={user.sold.toString().padStart(2, '0')}
+                        value={userStats.sold.toString().padStart(2, '0')}
                         icon={<TrendingUp />}
                         color="cyber-pink"
                         delay="300ms"
                     />
                     <StatCard
                         label="Reviews Given"
-                        value={user.reviewed.toString().padStart(2, '0')}
+                        value={userStats.reviewed.toString().padStart(2, '0')}
                         icon={<Award />}
                         color="cyber-neon"
                         delay="400ms"
